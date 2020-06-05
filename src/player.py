@@ -2,7 +2,16 @@
 # currently.
 
 class Player:
-    def __init__(self, name, room):
+    def __init__(self, name, roomIn):
         self.name = name
-        self.room = room
+        self.roomIn = roomIn
+
+    def move(self, direction, roomIn):
+        attribute = direction
+
+        if hasattr(roomIn, attribute):
+            return getattr(roomIn, attribute)
         
+        print("Cannot move in that direction")
+
+        return roomIn

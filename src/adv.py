@@ -4,8 +4,8 @@ from player import Player
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                    "North of you, the cave mount beckons"),
+'outside':  Room("Outside Cave Entrance",
+    "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -25,32 +25,62 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['outside'].n = room['foyer']
+room['foyer'].s = room['outside']
+room['foyer'].n = room['overlook']
+room['foyer'].e = room['narrow']
+room['overlook'].s = room['foyer']
+room['narrow'].w = room['foyer']
+room['narrow'].n = room['treasure']
+room['treasure'].s = room['narrow']
 
 #
 # Main
 #
+# Welcome Message
+print()
+print()
+print("Welcome hero, to >>-- WOLVES ADVENTURE -->")
+print()
+print()
+yourName = input("Choose your players name: ")
+print()
+print()
+print(f"Welcome to the Adventure, {yourName}")
+print()
+print()
 
 # Make a new player object that is currently in the 'outside' room.
 
-# =================Make name dynamic!!!!! 
+# ================= name dynamic!!!!! 
 
-player = Player('Jess', room['outside'])
+player = Player({yourName}, room['outside'])
+user = str(input("Press any key to start"))
+# Set done to false
 
-done = False
 
 # Write a loop that:
-#
+while not user == "quit":
+# What will it prompt when not done?
+    print()
+    print()
+    print('>>-- WOLVES ADVENTURE -->')
+    print()
+    print(f"{yourName}, {player.roomIn}")
+    print(f"{player.roomIn.desc}")
+    print()
+    print( "Choose: n / e / s / w / quit")
+    print()
+    print('>>---------------------->')
+    print()
+    command = input('Where do you want to go? ')
 
-command = input('What do you want to do? ')
-# * Prints the current room name
+    if command == 'quit':
+        break
+
+    else:
+        player.roomIn = player.move(command, player.roomIn)
+
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
@@ -58,5 +88,3 @@ command = input('What do you want to do? ')
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-if command in ['q', 'quit', 'cancel', 'leave', 'exit']:
-    done = True
