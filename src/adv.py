@@ -74,9 +74,12 @@ while not user == "quit":
     print('>>---------------------->')
     print()
     command = input('Where do you want to go? ')
+    print()
+    print()
 
     if command == 'quit':
         break
+
 
     else:
         player.roomIn = player.move(command, player.roomIn)
